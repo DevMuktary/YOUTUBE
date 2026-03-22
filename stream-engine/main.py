@@ -10,8 +10,16 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-# Whitelist the specific frontend domain to resolve the CORS preflight issue
-CORS(app, resources={r"/*": {"origins": "https://magnificent-nature-production-085b.up.railway.app"}})
+
+# --- BULLETPROOF CORS CONFIGURATION ---
+# Whitelist the domain, explicitly allow POST/OPTIONS methods, and allow JSON headers
+CORS(app, resources={
+    r"/*": {
+        "origins": "https://magnificent-nature-production-085b.up.railway.app",
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Origin"]
+    }
+})
 
 # --- ENGINE ASSETS & CONFIG ---
 OVERLAY_FILE = "live_overlay.png"
