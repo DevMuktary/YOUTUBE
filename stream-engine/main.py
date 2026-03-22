@@ -10,7 +10,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+# Whitelist the specific frontend domain to resolve the CORS preflight issue
+CORS(app, resources={r"/*": {"origins": "https://magnificent-nature-production-085b.up.railway.app"}})
 
 # --- ENGINE ASSETS & CONFIG ---
 OVERLAY_FILE = "live_overlay.png"
